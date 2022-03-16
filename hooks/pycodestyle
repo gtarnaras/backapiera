@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PWD=`pwd`
+pip3 install pycodestyle
+
+root_dir=$(git rev-parse --git-dir)
+root_dir=$(cd $root_dir >/dev/null && cd .. >/dev/null && pwd -P)
+echo $root_dir
+
+# --- Safety check and lint
+if [ ! -z "$root_dir" ]; then
+        pycodestyle --filename='*.py' ${root_dir}
+        autopep8 --in-place --aggressive --aggressive --recursive ${root_dir}
+fi
